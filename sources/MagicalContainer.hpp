@@ -11,6 +11,9 @@ namespace ariel
     {
     private:
         vector<int> container = {};
+        vector<int> primeContainer = {};
+        vector<int> sideCrossContainer = {};
+        vector<int> ascendingContainer = {};
 
     public:
         //---------------------------------------Constructors---------------------------------------//
@@ -21,12 +24,11 @@ namespace ariel
         void addElement(int element);
         void removeElement(int element);
         size_t size() const { return container.size(); };
-        void sortElements();
         void updatePrimeIterator();
         void updateSideCrossIterator();
         void updateAscendingIterator();
         void updateAllIterators();
-        void sortAscending();
+        void sortAscending(vector<int> &container);
         bool prime(int element);
 
         //------------------------------------------------------------------------------------------//

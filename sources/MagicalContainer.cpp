@@ -9,21 +9,55 @@ MagicalContainer::MagicalContainer() {}
 
 MagicalContainer::~MagicalContainer() {}
 
-void MagicalContainer ::sortElements()
+void MagicalContainer::updatePrimeIterator()
 {
+    primeContainer.clear();
+    for (auto iterator = this->container.begin(); iterator !=this->container.end(); iterator++)
+    {
+        if (prime(*iterator))
+        {
+            this->primeContainer.push_back(*iterator);
+        }
+    }
 }
 
-void MagicalContainer::updatePrimeIterator() {}
-
-void MagicalContainer::updateSideCrossIterator() {}
-
-void MagicalContainer::updateAscendingIterator() {}
-
-void MagicalContainer::updateAllIterators() {}
-
-void MagicalContainer::sortAscending()
+void MagicalContainer::updateSideCrossIterator()
 {
-    for (unsigned int i = 0; i < this->container.size(); i++)
+    sideCrossContainer.clear();
+    auto beginning = this->container.begin();
+    auto end = this->container.end();
+    if (beginning == end)
+    {
+        sideCrossContainer.push_back(*beginning);
+    }
+    while (beginning < end)
+    {
+        sideCrossContainer.push_back(*beginning);
+        sideCrossContainer.push_back(*end);
+        beginning++;
+        end--;
+    }
+}
+
+void MagicalContainer::updateAscendingIterator()
+{
+    ascendingContainer.clear();
+    for (auto iterator = this->container.begin(); iterator != this->container.end(); iterator++)
+    {
+        this->ascendingContainer.push_back(*iterator);
+    }
+    sortAscending(this->ascendingContainer);
+}
+
+void MagicalContainer::updateAllIterators() {
+    updatePrimeIterator();
+    updateSideCrossIterator();
+    updateAscendingIterator();
+}
+
+void MagicalContainer::sortAscending(vector<int> &container)
+{
+    for (unsigned int i = 0; i < container.size(); i++)
     {
         for (unsigned int j = 0; j < container.size() - i - 1; j++)
         {
@@ -68,7 +102,20 @@ void MagicalContainer::addElement(int element)
     this->container.push_back(element);
 }
 
-void MagicalContainer::removeElement(int element) {}
+void MagicalContainer::removeElement(int element) {
+    for (auto iterator = this->container.begin(); iterator != this->container.end(); iterator++)
+    {
+        if (*iterator == element)
+        {
+            this->container.erase(iterator);
+            return;
+        }
+        else if (iterator == this->container.end())
+        {
+            throw runtime_error("Element not found");
+        }
+    }
+}
 
 //------------------------------------------------------------------------------------------------------------------------------------------//
 //-----------------------------------------------------------AscendingIterator--------------------------------------------------------------//
