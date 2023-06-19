@@ -2,6 +2,12 @@
 
 #include <vector>
 #include <cmath>
+#include <iterator>
+#include <algorithm>
+#include <set>
+#include <iostream>
+#include <stdexcept>
+#include <list>
 
 using namespace std;
 
@@ -11,15 +17,11 @@ namespace ariel
     {
     private:
         vector<int> container = {};
-        vector<int> primeContainer = {};
-        vector<int> sideCrossContainer = {};
-        vector<int> ascendingContainer = {};
+        vector<int*> primeContainer = {};
+        vector<int*> sideCrossContainer = {};
+        vector<int*> ascendingContainer = {};
 
     public:
-        //---------------------------------------Constructors---------------------------------------//
-        MagicalContainer();
-        ~MagicalContainer();
-
         //-------------------------------------------Methods----------------------------------------//
         void addElement(int element);
         void removeElement(int element);
@@ -28,7 +30,7 @@ namespace ariel
         void updateSideCrossIterator();
         void updateAscendingIterator();
         void updateAllIterators();
-        void sortAscending(vector<int> &container);
+        void sortContainer();
         bool prime(int element);
 
         //------------------------------------------------------------------------------------------//
@@ -39,17 +41,17 @@ namespace ariel
         private:
             MagicalContainer &container;
             size_t index;
-            AscendingIterator(MagicalContainer &container, size_t index);
+            vector<int*>::iterator i;
 
         public:
             //-----------------------------Constructors and Destructors-----------------------------//
             AscendingIterator(MagicalContainer &container);
             AscendingIterator(const AscendingIterator &other);
-            AscendingIterator(AscendingIterator &&other) noexcept;
-            ~AscendingIterator();
+            AscendingIterator(AscendingIterator &&other) noexcept = default;
+            ~AscendingIterator() = default;
             //-------------------------------------Operators----------------------------------------//
             AscendingIterator &operator=(const AscendingIterator &other);
-            AscendingIterator &operator=(AscendingIterator &&other) noexcept;
+            AscendingIterator &operator=(AscendingIterator &&other) noexcept { return *this; };
             bool operator==(const AscendingIterator &other) const;
             bool operator!=(const AscendingIterator &other) const;
             bool operator<(const AscendingIterator &other) const;
@@ -58,8 +60,8 @@ namespace ariel
             AscendingIterator &operator++();
             AscendingIterator operator++(int);
             //-------------------------------------------Methods------------------------------------//
-            AscendingIterator begin() { return AscendingIterator(container, 0); }
-            AscendingIterator end() { return AscendingIterator(container, container.size()); }
+            AscendingIterator &begin();
+            AscendingIterator &end();
         };
 
         class SideCrossIterator
@@ -67,17 +69,17 @@ namespace ariel
         private:
             MagicalContainer &container;
             size_t index;
-            SideCrossIterator(MagicalContainer &container, size_t index);
+            vector<int*>::iterator i;
 
         public:
             //-----------------------------Constructors and Destructors-----------------------------//
             SideCrossIterator(MagicalContainer &container);
             SideCrossIterator(const SideCrossIterator &other);
-            SideCrossIterator(SideCrossIterator &&other) noexcept;
-            ~SideCrossIterator();
+            SideCrossIterator(SideCrossIterator &&other) noexcept = default;
+            ~SideCrossIterator() = default;
             //-------------------------------------Operators----------------------------------------//
             SideCrossIterator &operator=(const SideCrossIterator &other);
-            SideCrossIterator &operator=(SideCrossIterator &&other) noexcept;
+            SideCrossIterator &operator=(SideCrossIterator &&other) noexcept { return *this; };
             bool operator==(const SideCrossIterator &other) const;
             bool operator!=(const SideCrossIterator &other) const;
             bool operator<(const SideCrossIterator &other) const;
@@ -86,8 +88,8 @@ namespace ariel
             SideCrossIterator &operator++();
             SideCrossIterator operator++(int);
             //-------------------------------------------Methods------------------------------------//
-            SideCrossIterator begin() { return SideCrossIterator(container, 0); }
-            SideCrossIterator end() { return SideCrossIterator(container, container.size()); }
+            SideCrossIterator &begin();
+            SideCrossIterator &end();
         };
 
         class PrimeIterator
@@ -95,17 +97,17 @@ namespace ariel
         private:
             MagicalContainer &container;
             size_t index;
-            PrimeIterator(MagicalContainer &container, size_t index);
+            vector<int*>::iterator i;
 
         public:
             //-----------------------------Constructors and Destructors-----------------------------//
             PrimeIterator(MagicalContainer &container);
             PrimeIterator(const PrimeIterator &other);
-            PrimeIterator(PrimeIterator &&other) noexcept;
-            ~PrimeIterator();
+            PrimeIterator(PrimeIterator &&other) noexcept = default;
+            ~PrimeIterator() = default;
             //-------------------------------------Operators----------------------------------------//
             PrimeIterator &operator=(const PrimeIterator &other);
-            PrimeIterator &operator=(PrimeIterator &&other) noexcept;
+            PrimeIterator &operator=(PrimeIterator &&other) noexcept { return *this; };
             bool operator==(const PrimeIterator &other) const;
             bool operator!=(const PrimeIterator &other) const;
             bool operator<(const PrimeIterator &other) const;
@@ -114,8 +116,8 @@ namespace ariel
             PrimeIterator &operator++();
             PrimeIterator operator++(int);
             //-------------------------------------------Methods------------------------------------//
-            PrimeIterator begin() { return PrimeIterator(container, 0); }
-            PrimeIterator end() { return PrimeIterator(container, container.size()); }
+            PrimeIterator &begin();
+            PrimeIterator &end();
         };
     };
 };
